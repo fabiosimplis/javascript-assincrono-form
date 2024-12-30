@@ -1,4 +1,5 @@
 @import './styles/menu-lateral.css';
+@import './styles/principal.css';
 
 :root {
     --backgroud-color: #00090E;
