@@ -55,3 +55,13 @@ aside {
     color: var(--secundary-color);
     font-size: 1.375rem;
 }
+
+.lista-links li:first-of-type a {
+    color: var(--primary-color);
+}
+
+.link-destaque {
+    border: 1px solid var(--primary-color);
+    padding: 12px 30px;
+    border-radius: 8px;
+}
