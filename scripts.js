@@ -92,3 +92,22 @@ inputTags.addEventListener("keypress", async (evento) => {
         }
     }
 });
+
+/*
+* TRABALHANDO COM O FORMULARIO
+*/
+
+const botaoPublicar = document.querySelector(".botao-publicar");
+
+botaoPublicar.addEventListener("click", async (evento) => {
+    evento.preventDefault();
+
+    const nomeDoProjeto = document.getElementById("nome").value;
+    const descricaoDoProjeto = document.getElementById("descricao").value;
+    // busca todos os elementos 'p' que encontrar, e retorna seu conteudo
+    const tagsProjeto = Array.from(listaTags.querySelectorAll("p")).map((tag) => tag.textContent);
+
+    console.log(nomeDoProjeto);
+    console.log(descricaoDoProjeto);
+    console.log(tagsProjeto);
+})
