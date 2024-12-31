@@ -33,7 +33,7 @@ inputUpload.addEventListener("change", async (evento) => {
     // Pega arquivo dentro do evento
     const arquivo = evento.target.files[0];
     // se arquivo existir
-    if(arquivo) {
+    if (arquivo) {
         try {
             const conteudoDoArquivo = await lerConteudoDoArquivo(arquivo);
             console.log("conteudo", conteudoDoArquivo);
@@ -52,23 +52,43 @@ inputUpload.addEventListener("change", async (evento) => {
 const inputTags = document.getElementById("input-tags");
 const listaTags = document.getElementById("lista-tags");
 
-inputTags.addEventListener("keypress", (evento) => {
-    if (evento.key == "Enter") {
-        evento.preventDefault();
-        const tagTexto = inputTags.value.trim();
-        if (tagTexto !== ""){
-            const tagNova = document.createElement("li");
-            tagNova.innerHTML = `<p>${tagTexto}</p> <img src="./img/close-black.svg" class="remove-tag">`;
-            listaTags.appendChild(tagNova);
-            inputTags.value = "";
-        }
-    }
-});
-
 listaTags.addEventListener("click", (evento) => {
     if (evento.target.classList.contains("remove-tag")) {
         const tagQueQueremosRemover = evento.target.parentElement;
         console.log(tagQueQueremosRemover);
         listaTags.removeChild(tagQueQueremosRemover);
+    }
+});
+
+const tagsDisponiveis = ["Front-end", "Programação", "Data Science", "Full-stack", "HTML", "CSS", "JavaScript", "Java", "C", "C++", "C#"];
+
+async function verificaTagsDisponiveis(tagTexto) {
+    return new Promise((resolve) => {
+        setTimeout(() => {
+            resolve(tagsDisponiveis.includes(tagTexto));
+        }, 1000);
+    });
+}
+
+inputTags.addEventListener("keypress", async (evento) => {
+    if (evento.key == "Enter") {
+        evento.preventDefault();
+        const tagTexto = inputTags.value.trim();
+        if (tagTexto !== "") {
+            try {
+                const tagExiste = await verificaTagsDisponiveis(tagTexto);
+                if (tagExiste) {
+                    const tagNova = document.createElement("li");
+                    tagNova.innerHTML = `<p>${tagTexto}</p> <img src="./img/close-black.svg" class="remove-tag">`;
+                    listaTags.appendChild(tagNova);
+                    inputTags.value = "";
+                } else {
+                    alert("Tag não foi encontrada.");
+                }
+            } catch (error) {
+                console.error("ERROR: erro ao verificar a existência da tag.");
+                alert("Erro ao verificar a existência da tag. Verifique o console");
+            }
+        }
     }
 });
